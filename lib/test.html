@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>eSewa</title> <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="styles/vendor.63d685ab.css">
+    <link href="https://cdn.esewa.com.np/ui/css/esewa-components.min.css" rel="stylesheet">
+    <link href="https://cdn.esewa.com.np/ui/bower/css/select2.css" rel="stylesheet">
+    <link href="https://cdn.esewa.com.np/ui/bower/css/selectize.default.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.b7606626.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body ng-app="merchantApp" ng-cloak>
+    <!-- *************************************************************** -->
+    <div class="container-fluid nav-main-bg navbar-fixed-top" ng-show="isLoggedIn()">
+        <!-- ng-show="isLoggedIn()" -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-md-2
+            col-sm-2">
+                    <div class="navbar-header"> <button aria-controls="navbar" aria-expanded="false" button
+                            class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+                            <span class="sr-only">Toggle
+                                navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                                class="icon-bar"></span>
+                        </button> <a class="navbar-brand" ng-click="goToHome()" rel="home" title="eSewa">
+                            <!--<img style="max-width:100px; margin-top: -7px;" src="imgs/esewa_logo.5fd33842.png">-->
+                            <img alt="eSewa" src="imgs/esewa_logo.5fd33842.png"
+                                style="margin-top: -7px; cursor: pointer">
+                        </a> </div>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10" style="padding-left: 45px">
+                    <div class="collapse navbar-collapse navbar-responsive-collapse" id="navbar">
+                        <div class="headerDivider"></div>
+                        <div class="nav
+                navbar-nav" style="color:white; margin: 10px 0 0 50px ;
+                font-size: large"> {{$storage1.merchant.name}} </div>
+                        <ul class="nav navbar-nav navbar-right" style="margin-right: 20px">
+                            <!--<li class="account-cash">NPR. <b>8054.00</b></li>-->
+                            <li class="hidden-xs" style="color: #fff;margin : 10px 20px 0
+                  0;font-size: 15px"> <strong> NPR.
+                                    {{$storage1.merchant.totalBalance | twoDecimalPlaceFilter}}
+                                </strong> </li>
+                            <li class="dropdown"> <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle"
+                                    data-toggle="dropdown" role="button"> <img alt="User
+                      Profile" class="img-circle img-c img e special-img" ng-if="$storage1.merchant.logoPath"
+                                        ng-src="{{$storage1.merchant.logoPath}}" style="max-width:
+                      130%; background-color: white" title="User Profile"> <img alt="User Profile"
+                                        class="img-c img e special-img" ng-if="!$storage1.merchant.logoPath"
+                                        src="imgs/user.ac8516c3.png" title="User Profile"> </a>
+                                <ul class="dropdown-menu">
+                                    <!-- <li> {{$storage1.merchant.currentUser}}</li>-->
+                                    <li class="dropdown-header">
+                                        <h1>{{mainname}} </h1>
+                                    </li>
+                                    <li ng-if="$storage1.merchant.currentUser">
+                                        <a><strong>{{$storage1.merchant.currentUser}}
+                                            </strong></a>
+                                    </li>
+                                    <li ng-if="!$storage1.merchant.currentUser"><a href="#">
+                                            {{$storage1.merchant.name}} </a></li>
+                                    <li class="divider" role="separator"></li>
+                                    <!--<li><a href="#">Change Password</a></li>-->
+                                    <li><a ui-sref="account.profile">Profile </a></li>
+                                    <li><a ui-sref="statement">Statement</a></li>
+                                    <li class="divider" role="separator"></li>
+                                    <li><a ui-sref="logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!--&lt;!&ndash; search bar &ndash;&gt;-->
+                        <!--<div id="wrap">-->
+                        <!--<form action="?" autocomplete="on">-->
+                        <!--<input id="search" name="search" type="stext" placeholder="What're we looking for ?">-->
+                        <!--<input id="search_submit" value="Rechercher" type="submit">-->
+                        <!--</form>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; search bar close &ndash;&gt;-->
+                    </div>
+                </div>
+            </div> <!-- row close -->
+        </div> <!-- container close -->
+    </div> <!-- nav container-fluid close -->
+    <!-- *************************************************************** -->
+    <div class="container-fliud nav-sub-bg push-down" ng-show="isLoggedIn()">
+        <div class="container">
+            <div class="row">
+                <ul class="nav nav-pills">
+                    <!--<li role="presentation" ng-class="{active: uiState.includes('account')}">----->
+                    <li ng-class="{active: $state.includes('account')}" role="presentation"> <a
+                            ui-sref="account.profile">My Account</a></li>
+                    <li ng-class="{active: $state.includes('statement')}" ng-if="permission.forViewMinistatement ==
+              neededPermission.viewMiniStatement ||
+              permission.forViewAccountstatement==
+              neededPermission.viewAccountStatement ||
+              permission.forMerchantAdmin == neededPermission.merchantAdmin" role="presentation"> <a
+                            ui-sref="statement">Statement</a></li>
+                    <li ng-class="{active: $state.includes('getMoney')}" ng-cloak ng-if="permission.forGetMoneyOut == neededPermission.getMoneyOut
+              || permission.forMerchantAdmin == neededPermission.merchantAdmin" role="presentation"> <a
+                            ui-sref="getMoney.Out">Get Money Out</a></li>
+                    <li ng-class="{active: $state.includes('users')}" ng-cloak ng-if="permission.forViewUsers == neededPermission.viewUsers ||
+              permission.forMerchantAdmin == neededPermission.merchantAdmin" role="presentation"> <a
+                            ui-sref="users.allUsers">Users</a></li>
+                    <li role="presentation" ng-class="{active:
+              $state.includes('sendmoney')}" ng-if="permission.forUserFundTransfer ==
+              neededPermission.userFundTransfer || permission.forMerchantAdmin
+              == neededPermission.merchantAdmin" ng-cloak> <a ui-sref="fundTransfer.sendmoney">Send Money</a></li>
+                    <li role="presentation" ng-class="{active:
+              $state.includes('helpSection')}" ng-cloak> <a ui-sref="helpSection">Need Help</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ui-view></div>
+    <div class="col-md-12">
+        <!--<hr style="border-top: 1px solid #ccc;">-->
+        <div class="container" ng-show="isLoggedIn()" style="padding-left: auto;
+        margin-left: auto">
+            <hr style="border-top: 1px solid #ccc">
+            <div class="row nopadding">
+                <div class="footerbar">
+                    <div class="container-fliud push-down">
+                        <div class="container">
+                            <div class="row">
+                                <ul class="nav nav-pills center-pills push-down
+                    static-footer-menus">
+                                    <li role="presentation"><a href="#">Getting
+                                            Started</a></li>
+                                    <li role="presentation"><a href="#">Security</a></li>
+                                    <li role="presentation"><a href="#">Contact</a></li>
+                                    <li role="presentation"><a href="#">Terms of Use</a></li>
+                                    <li role="presentation"><a href="#">Privacy Policy</a></li>
+                                    <li role="presentation"><a href="#">Reward Point</a></li>
+                                </ul>
+                                <p class="text-center push-down" style="font-weight:
+                    200; font-size: 12px">eSewa Nepal 2009-2016. All Rights
+                                    Reserved.</p>
+                                <p class="text-center push-down"><img alt=""
+                                        src="/imgs/esewafonepay_footer.bd92a3e9.png"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--[if lt IE 9]>
+<script src="scripts/oldieshim.d41d8cd9.js"></script>
+<![endif]-->
+    <script src="scripts/vendor.165240ff.js"></script>
+    <script src="scripts/scripts.a91e4354.js"></script>
+    <script src="https://cdn.esewa.com.np/ui/js/ec-vendor.js"></script>
+    <script src="https://cdn.esewa.com.np/ui/js/esewa-messages.min.js"></script>
+    <script src="https://cdn.esewa.com.np/ui/js/esewa-components-3.21.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.min.js"></script>
+    <script src="https://cdn.esewa.com.np/ui/js/angular-recaptcha.min.js"></script>
+    <script src="https://cdn.esewa.com.np/ui/bower/select.js"></script>
+    <script src="https://cdn.esewa.com.np/ui/bower/angular-sanitize.js"></script>
+</body>
+
+</html>
