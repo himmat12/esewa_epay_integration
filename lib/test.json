@@ -1,0 +1,14 @@
+{
+    "location": "/failure",
+    "set-cookie": "JSESSIONID=01443EF0939CEBEF973EB8CEB35CA315; Path=/; HttpOnly;Secure,errormsg=Invalid%20amount.; Expires=Sat, 15-May-2021 04:44:49 GMT; Path=/;Secure,TS0104ed60=01fe04f527ed0f3e231da556f947bb26f92538e676db14d1af6fd9f079e027e5752795f77529891bcd2e05f4967158e2c44aab798a1afe4f565f608c28664565bdb08b0141ddb72788bc19812fa0652dcb48b7c8b9; Path=/;Secure,TSc4fa6d1f029=08ea48504aab28001dd3b30f95ea6bd269aa731d1c0d2a8061931d3fcdd8b882d5b02ea6302a97740959cee4b9cddb15; Max-Age=30;Path=/;Secure",
+    "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+    "date": "Sat, 15 May 2021 04:44:34 GMT",
+    "content-length": "0",
+    "p3p": "CP=\"{}\"",
+    "pragma": "no-cache",
+    "x-frame-options": "DENY",
+    "x-xss-protection": "1; mode=block",
+    "content-language": "en-US",
+    "x-content-type-options": "nosniff",
+    "expires": "0"
+}

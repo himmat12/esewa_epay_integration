@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:esewa_manual_api_integration/webview.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,13 +13,14 @@ class ServiceClass extends GetxController {
     "psc": 0,
     "txAmt": 0,
     "tAmt": 100,
-    "pid": "ee2c3ca1-696b-4cc5-a6be-2c40d929d453",
+    "pid": UniqueKey().toString(),
     "scd": "EPAYTEST",
     "su": "http://merchant.com.np/page/esewa_payment_success?q=su",
     "fu": "http://merchant.com.np/page/esewa_payment_failed?q=fu",
   };
 
   static String url = "uat.esewa.com.np";
+  static String production = "esewa.com.np";
   static String path = "/epay/main";
   static final client = http.Client();
 
@@ -31,6 +33,7 @@ class ServiceClass extends GetxController {
   }
 
   static Future<dynamic> postData() async {
+    // print(jsonEncode(formData));
     try {
       final response = await client.post(
         Uri.https(url, path),
@@ -39,12 +42,12 @@ class ServiceClass extends GetxController {
         encoding: Encoding.getByName("x-www-form-urlencoded"),
       );
 
-      print(response.statusCode);
-      print(jsonDecode(jsonEncode(response.body)));
+      print('RESPONSE STATUS => ${response.statusCode}');
+      // print('RESPONSE HEADERS => ${jsonEncode(response.headers)}');
 
       if (response.statusCode == 302) {
-        Get.to(() => Webview());
-        print(jsonDecode(jsonEncode(response.body)));
+        // Get.to(() => Webview());
+        print('RESPONSE HEADERS => ${jsonEncode(response.headers)}');
       }
 
       if (response.statusCode == 200) {
@@ -54,8 +57,6 @@ class ServiceClass extends GetxController {
         print(jsonDecode(jsonEncode(response.body)));
 
         return _data;
-      } else {
-        return response.body;
       }
     } on HttpException catch (e) {
       throw e.message;
