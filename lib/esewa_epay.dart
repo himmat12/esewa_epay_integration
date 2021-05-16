@@ -26,6 +26,16 @@ class _TestPageState extends State<EsewaEpay> {
         .toString());
   }
 
+  // ePay deatils
+  double tAmt = 1000;
+  double amt = 800;
+  double txAmt = 100;
+  double psc = 50;
+  double pdc = 50;
+  String scd = "EPAYTEST";
+  String su = "https://github.com/kaledai";
+  String fu = "https://refactoring.guru/design-patterns/factory-method";
+
   @override
   void initState() {
     super.initState();
@@ -39,11 +49,15 @@ class _TestPageState extends State<EsewaEpay> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
+            String pid = UniqueKey().toString();
             _webViewController.evaluateJavascript(
-                'requestPayment(tAmt = 1000, amt = 200, txAmt = 100, psc = 20, pdc = 10, scd = "EPAYTEST", pid = "1", su = "#", fu = "#")');
+                'requestPayment(tAmt = $tAmt, amt = $amt, txAmt = $txAmt, psc = $psc, pdc = $pdc, scd = "$scd", pid = "$pid", su = "$su", fu = "$fu")');
           });
         },
         child: Icon(Icons.add),
+      ),
+      appBar: AppBar(
+        leading: SizedBox.shrink(),
       ),
       body: WebView(
         initialUrl: "about:blank",
