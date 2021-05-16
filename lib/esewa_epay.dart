@@ -46,16 +46,16 @@ class _TestPageState extends State<EsewaEpay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            String pid = UniqueKey().toString();
-            _webViewController.evaluateJavascript(
-                'requestPayment(tAmt = $tAmt, amt = $amt, txAmt = $txAmt, psc = $psc, pdc = $pdc, scd = "$scd", pid = "$pid", su = "$su", fu = "$fu")');
-          });
-        },
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       String pid = UniqueKey().toString();
+      //       _webViewController.evaluateJavascript(
+      //           'requestPayment(tAmt = $tAmt, amt = $amt, txAmt = $txAmt, psc = $psc, pdc = $pdc, scd = "$scd", pid = "$pid", su = "$su", fu = "$fu")');
+      //     });
+      //   },
+      //   child: Icon(Icons.add),
+      // ),
       appBar: AppBar(
         leading: SizedBox.shrink(),
       ),
@@ -68,6 +68,13 @@ class _TestPageState extends State<EsewaEpay> {
             onMessageReceived: (message) {},
           ),
         ]),
+        onPageFinished: (data) {
+          setState(() {
+            String pid = UniqueKey().toString();
+            _webViewController.evaluateJavascript(
+                'requestPayment(tAmt = $tAmt, amt = $amt, txAmt = $txAmt, psc = $psc, pdc = $pdc, scd = "$scd", pid = "$pid", su = "$su", fu = "$fu")');
+          });
+        },
         onWebViewCreated: (webViewController) {
           // _controller.complete(webViewController);
           _webViewController = webViewController;
